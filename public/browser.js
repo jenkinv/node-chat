@@ -1,4 +1,4 @@
-var socket = io.connect('http://flora.nodejitsu.com');
+var socket = io.connect('/');
 //var socket = io.connect('http://192.168.147.52');
 var name ,newcount = 0;
 socket.on('history', function(history) {
