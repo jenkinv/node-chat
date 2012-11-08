@@ -3,7 +3,7 @@ var express = require('express'),
 	    app = express.createServer(),
 	     io = require('./socket.io.js');
 
-var PORT = 80;//http server port
+var PORT = 3000;//http server port
 
 io.init(app);
 

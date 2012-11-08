@@ -1,4 +1,4 @@
-var socket = io.connect('/');
+var port=3000, socket = io.connect('http://' + location.host + ':' + port + '/');
 //var socket = io.connect('http://192.168.147.52');
 var name ,newcount = 0;
 socket.on('history', function(history) {
