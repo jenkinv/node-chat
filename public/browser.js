@@ -1,4 +1,4 @@
-var port=3000, socket = io.connect('http://' + location.host + ':' + port + '/');
+var port=3000, socket = io.connect('http://' + location.hostname + ':' + port + '/');
 //var socket = io.connect('http://192.168.147.52');
 var name ,newcount = 0;
 socket.on('history', function(history) {
@@ -27,6 +27,10 @@ socket.on('join', function(data) {
 socket.on('leave', function(data) {
     refreshOnline(data.onlines);
     append(data.item);    
+});
+
+socket.on('noteUpdate', function(note) {
+    $('note').value = note;
 });
 
 function joinCb(data) {
@@ -109,6 +113,12 @@ function formInput(){
         input.value = '';
         input.focus();
     }
+    return false;
+}
+
+function noteUpdate() {
+    var input = $('note'), note = input.value || '';
+    socket.emit('noteUpdate', note);
     return false;
 }
 

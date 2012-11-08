@@ -1,11 +1,13 @@
 //dependcy module
-var express = require('express'),
-	    app = express.createServer(),
+var http = require('http'),
+    express = require('express'),
+	    app = express(),//.createServer(),
+      server = http.createServer(app),
 	     io = require('./socket.io.js');
 
 var PORT = 3000;//http server port
 
-io.init(app);
+io.init(server);
 
 //config for all env
 app.configure(function(){
@@ -31,5 +33,5 @@ app.get('/:id', function(req, res) {
 });
 
 //server listen start
-app.listen(PORT);
+server.listen(PORT);
 console.log('Express server listening on port %d in %s mode', PORT, app.settings.env);
