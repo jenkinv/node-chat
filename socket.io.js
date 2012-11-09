@@ -11,7 +11,6 @@ exports.init = function(app){
 	io.sockets.on('connection', function(socket) {
 
 		socket.on('msg', function(data) {
-            console.log(require('util').inspect(io.sockets));
             if(!socket.name) return;
             var item = {type: 'msg', name: socket.name, msg: data, time: new Date().getTime()};
             append(item)
@@ -29,7 +28,7 @@ exports.init = function(app){
             socket.emit('history', cache);//send history data when user join
             append(item);
 			if(fn instanceof Function) fn(name);
-            client.get('note.' + name, function(_note){
+            client.get('note.' + name, function(err, _note){
                 socket.emit('noteUpdate', _note);
             });
             io.sockets.emit('join', {item: item, onlines: cacheUsers}); //send msg to everyone connected
@@ -51,7 +50,6 @@ exports.init = function(app){
             client.set('note.' + socket.name, note);
             for(_socketName in io.sockets.sockets) {
                 var _socket = io.sockets.sockets[_socketName];
-                console.log(_socket);
                 if(socket.name == _socket.name) _socket.emit('noteUpdate', note);
             }
         });
